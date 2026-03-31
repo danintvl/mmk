@@ -1,0 +1,4 @@
+# Les règles globales sont centralisées dans ../.gitignore
+# Ce fichier reste pour les exceptions spécifiques au module backend.
+
+HELP.md

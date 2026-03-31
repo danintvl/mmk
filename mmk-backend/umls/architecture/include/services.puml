@@ -1,0 +1,46 @@
+package "service" {
+
+  class AuthService {
+    + register()
+    + login()
+  }
+
+  class UserService {
+    + getUserById()
+    + updateUser()
+    + deactivateUser()
+  }
+
+  class PlayerService {
+    + createPlayerProfile()
+    + getPlayerById()
+    + updatePlayer()
+    + getPlayerMatchmakingRequests()
+  }
+
+  class MatchmakingRequestService {
+    + createMatchmakingRequest()
+    + getMatchmakingRequestById()
+    + cancelMatchmakingRequest()
+    + getMatchedMatch()
+  }
+
+  class MatchService {
+    + getMatchById()
+    + getAllMatches()
+    + getMatchParticipants()
+    + confirmMatch()
+    + cancelMatch()
+    + createMatch()
+  }
+
+  class MatchmakingService {
+    + tryMatchmaking()
+    + findCompatibleRequests()
+    + selectCommonField()
+    + createMatchFromRequests()
+  }
+
+  MatchmakingRequestService --> MatchmakingService
+  MatchmakingService --> MatchService
+}

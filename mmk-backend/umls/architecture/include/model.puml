@@ -1,0 +1,75 @@
+package "model" {
+
+  class User {
+    - id : Long
+    - email : String
+    - passwordHash : String
+    - role : UserRole
+    - active : boolean
+  }
+
+  class Player {
+    - id : Long
+    - username : String
+  }
+
+  class Field {
+    - id : Long
+    - name : String
+    - location : String
+  }
+
+  class MatchmakingRequest {
+    - id : Long
+    - createdAt : LocalDateTime
+    - status : MatchmakingRequestStatus
+  }
+
+  class AvailabilitySlot {
+    - id : Long
+    - startAt : LocalDateTime
+    - endAt : LocalDateTime
+  }
+
+  class Match {
+    - id : Long
+    - scheduledAt : LocalDateTime
+    - status : MatchStatus
+  }
+
+  class MatchParticipant {
+    - id : Long
+    - joinedAt : LocalDateTime
+  }
+
+  enum UserRole {
+    PLAYER
+    ADMIN
+  }
+
+  enum MatchmakingRequestStatus {
+    QUEUED
+    MATCHED
+    CANCELLED
+    EXPIRED
+  }
+
+  enum MatchStatus {
+    CREATED
+    CONFIRMED
+    CANCELLED
+    COMPLETED
+  }
+
+  User "1" -- "0..1" Player : playerProfile
+
+  MatchmakingRequest "0..*" --> "1" Player : player
+  MatchmakingRequest "1" *-- "1..*" AvailabilitySlot : availabilitySlots
+  MatchmakingRequest "0..*" --> "0..*" Field : acceptableFields
+  MatchmakingRequest "0..*" --> "0..1" Match : matchedMatch
+
+  Match "1" *-- "0..10" MatchParticipant : participants
+  MatchParticipant "0..*" --> "1" Player : player
+
+  Match "0..*" --> "0..1" Field : field
+}

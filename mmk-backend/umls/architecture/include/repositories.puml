@@ -1,0 +1,28 @@
+package "repository" {
+
+  interface UserRepository <<JpaRepository<User, Long>>> {
+    + findByEmail(email)
+    + existsByEmail(email)
+  }
+
+  interface PlayerRepository <<JpaRepository<Player, Long>>> {
+    + findByUserId(userId)
+  }
+
+  interface FieldRepository <<JpaRepository<Field, Long>>> {
+  }
+
+  interface MatchmakingRequestRepository <<JpaRepository<MatchmakingRequest, Long>>> {
+    + findByPlayerId(playerId)
+    + findByStatus(status)
+  }
+
+  interface MatchRepository <<JpaRepository<Match, Long>>> {
+    + findByStatus(status)
+  }
+
+  interface MatchParticipantRepository <<JpaRepository<MatchParticipant, Long>>> {
+    + findByMatchId(matchId)
+    + findByPlayerId(playerId)
+  }
+}

@@ -1,0 +1,40 @@
+# --- OS artifacts ---
+.DS_Store
+Thumbs.db
+
+# --- Editor / IDE ---
+.idea/
+.vscode/
+*.iml
+*.ipr
+*.iws
+
+# Vim / shell temp files
+*.swp
+*.swo
+*~
+
+# --- Logs ---
+*.log
+logs/
+
+# --- Environment files ---
+.env
+.env.*
+!.env.example
+
+# --- Java / Gradle build outputs ---
+**/.gradle/
+**/build/
+**/out/
+**/bin/
+
+# JVM crash logs
+hs_err_pid*
+replay_pid*
+
+# --- Keep Gradle wrapper versioned ---
+!mmk-backend/gradle/wrapper/gradle-wrapper.jar
+!mmk-backend/gradlew
+!mmk-backend/gradlew.bat
+

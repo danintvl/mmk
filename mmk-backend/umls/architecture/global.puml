@@ -1,0 +1,54 @@
+@startuml
+left to right direction
+skinparam packageStyle rectangle
+
+!include model.puml
+!include controllers.puml
+!include services.puml
+!include repositories.puml
+
+' =========================
+' controller -> service
+' =========================
+PlayerController --> PlayerService
+MatchmakingRequestController --> MatchmakingRequestService
+MatchController --> MatchService
+
+' =========================
+' service -> service
+' =========================
+MatchmakingRequestService --> MatchmakingService
+MatchmakingService --> MatchService
+
+' =========================
+' service -> repository
+' =========================
+PlayerService --> PlayerRepository
+PlayerService --> MatchmakingRequestRepository
+
+MatchmakingRequestService --> MatchmakingRequestRepository
+MatchmakingRequestService --> PlayerRepository
+MatchmakingRequestService --> FieldRepository
+MatchmakingRequestService --> MatchRepository
+
+MatchmakingService --> MatchmakingRequestRepository
+MatchmakingService --> MatchRepository
+MatchmakingService --> MatchParticipantRepository
+MatchmakingService --> FieldRepository
+MatchmakingService --> PlayerRepository
+
+MatchService --> MatchRepository
+MatchService --> MatchParticipantRepository
+MatchService --> FieldRepository
+
+' =========================
+' repository -> model
+' =========================
+UserRepository ..> User
+PlayerRepository ..> Player
+FieldRepository ..> Field
+MatchmakingRequestRepository ..> MatchmakingRequest
+MatchRepository ..> Match
+MatchParticipantRepository ..> MatchParticipant
+
+@enduml

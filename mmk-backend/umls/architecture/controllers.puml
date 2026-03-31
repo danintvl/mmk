@@ -1,0 +1,70 @@
+@startuml
+package "controller" {
+
+  class AuthController {
+    + register()
+    + login()
+  }
+
+  class UserController {
+    + getUserById()
+    + updateUser()
+    + deactivateUser()
+  }
+
+  class PlayerController {
+    + createPlayerProfile()
+    + getPlayerById()
+    + updatePlayer()
+    + getPlayerMatchmakingRequests()
+  }
+
+  class MatchmakingRequestController {
+    + createMatchmakingRequest()
+    + getMatchmakingRequestById()
+    + cancelMatchmakingRequest()
+    + getMatchedMatch()
+  }
+
+  class MatchController {
+    + getMatchById()
+    + getAllMatches()
+    + getMatchParticipants()
+    + confirmMatch()
+    + cancelMatch()
+  }
+
+  note right of AuthController
+    POST /api/auth/register
+    POST /api/auth/login
+  end note
+
+  note right of UserController
+    GET /api/users/{id}
+    PUT /api/users/{id}
+    DELETE /api/users/{id}
+  end note
+
+  note right of PlayerController
+    POST /api/players
+    GET /api/players/{id}
+    PUT /api/players/{id}
+    GET /api/players/{id}/matchmaking-requests
+  end note
+
+  note right of MatchmakingRequestController
+    POST /api/matchmaking-requests
+    GET /api/matchmaking-requests/{id}
+    DELETE /api/matchmaking-requests/{id}
+    GET /api/matchmaking-requests/{id}/match
+  end note
+
+  note right of MatchController
+    GET /api/matches
+    GET /api/matches/{id}
+    GET /api/matches/{id}/participants
+    POST /api/matches/{id}/confirm
+    POST /api/matches/{id}/cancel
+  end note
+}
+@enduml

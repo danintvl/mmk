@@ -1,0 +1,19 @@
+spring:
+  application:
+    name: mmk-backend
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/mmk
+    username: mmk_user
+    password: mmk_pass
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+
+server:
+  port: 8080

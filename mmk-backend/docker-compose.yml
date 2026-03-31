@@ -1,0 +1,16 @@
+services:
+  db:
+    image: postgres:16
+    container_name: mmk-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: mmk
+      POSTGRES_USER: mmk_user
+      POSTGRES_PASSWORD: mmk_pass
+    ports:
+      - "5432:5432"
+    volumes:
+      - mmk_postgres_data:/var/lib/postgresql/data
+
+volumes:
+  mmk_postgres_data:
