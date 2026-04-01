@@ -10,22 +10,37 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name = "users")
 public class User {
 
+    private static final int USERNAME_MAX_LENGTH = 50;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotBlank
+    @Email
     @Column(nullable = false, unique = true)
     private String email;
 
+    @NotBlank
+    @Size( max = USERNAME_MAX_LENGTH)
+    @Column(nullable = false, length = USERNAME_MAX_LENGTH, unique = true)
+    private String username;
+
     @JsonIgnore
-    @Column(nullable = false)
+    @NotBlank
+    @Column(nullable = false, length = 255)
     private String passwordHash;
 
+    @NotNull
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private UserRole role;
@@ -39,12 +54,15 @@ public class User {
     public User() {
     }
 
-    public User(String email, String passwordHash, UserRole role, boolean active) {
+    public User(String email, String username, String passwordHash, UserRole role, boolean active) {
         this.email = email;
+        this.username = username;
         this.passwordHash = passwordHash;
         this.role = role;
         this.active = active;
     }
+
+    // ---------------GETTERS------------- //
 
     public Long getId() {
         return id;
@@ -53,6 +71,8 @@ public class User {
     public String getEmail() {
         return email;
     }
+
+    public String getUsername(){ return username;}
 
     public String getPasswordHash() {
         return passwordHash;
@@ -70,9 +90,13 @@ public class User {
         return player;
     }
 
+    // ---------------SETTERS------------- //
+
     public void setEmail(String email) {
         this.email = email;
     }
+
+    public void setUsername(String username) { this.username = username; }
 
     public void setPasswordHash(String passwordHash) {
         this.passwordHash = passwordHash;
