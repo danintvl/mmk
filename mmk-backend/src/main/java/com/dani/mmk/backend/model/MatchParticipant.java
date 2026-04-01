@@ -6,7 +6,10 @@ import jakarta.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "match_participants")
+@Table(name = "match_participants", uniqueConstraints = @UniqueConstraint(
+        name = "uk_match_participants_match_player",
+        columnNames = {"match_id", "player_id"}
+))
 public class MatchParticipant {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

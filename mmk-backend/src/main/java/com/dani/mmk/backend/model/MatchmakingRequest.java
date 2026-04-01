@@ -5,7 +5,7 @@ import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDateTime;
-import java.util.List;
+import java.util.ArrayList;import java.util.List;
 
 @Entity
 @Table(name = "matchmaking_requests")
@@ -21,9 +21,10 @@ public class MatchmakingRequest {
 
     @NotEmpty
     @OneToMany(mappedBy = "matchmakingRequest", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    private List<AvailabilitySlot> availabilitySlots;
+    private List<AvailabilitySlot> availabilitySlots = new ArrayList<>();
 
     @NotNull
+    @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private MatchmakingRequestStatus status;
 
@@ -37,11 +38,12 @@ public class MatchmakingRequest {
     private List<Field> acceptableFields;
 
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = true)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "matched_match_id")
     private Match matchedMatch;
 
     @NotNull
+    @Column(nullable = false)
     private LocalDateTime createdAt;
 
     protected MatchmakingRequest(){}
@@ -73,8 +75,23 @@ public class MatchmakingRequest {
 
     //--------------------------SETTERS---------------------------//
 
+    public void addAvailabilitySlot(AvailabilitySlot slot){
+        this.availabilitySlots.add(slot);
+        slot.setMatchmakingRequest(this);
+    }
+
+    public void removeAvailabilitySlot(AvailabilitySlot slot){
+        this.availabilitySlots.remove(slot);
+        slot.setMatchmakingRequest(null);
+    }
+
     public void setAvailabilitySlots(List<AvailabilitySlot> availabilitySlots) {
-        this.availabilitySlots = availabilitySlots;
+        this.availabilitySlots.forEach(slot -> slot.setMatchmakingRequest(null));
+        this.availabilitySlots.clear();
+
+        if (availabilitySlots != null){
+            availabilitySlots.forEach(this::addAvailabilitySlot);
+        }
     }
 
     public void setPlayer(Player player) {

@@ -20,13 +20,14 @@ public class Match {
     private LocalDateTime scheduledAt;
 
     @NotNull
+    @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private MatchStatus status;
 
     @OneToMany(mappedBy = "match", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<MatchParticipant> participants = new ArrayList<>();
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = true)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "field_id")
     private Field field;
 
@@ -71,7 +72,22 @@ public class Match {
         this.field = field;
     }
 
+    public void addParticipant(MatchParticipant participant){
+        this.participants.add(participant);
+        participant.setMatch(this);
+    }
+
+    public void removeParticipant(MatchParticipant participant){
+        this.participants.remove(participant);
+        participant.setMatch(null);
+    }
+
     public void setParticipants(List<MatchParticipant> participants) {
-        this.participants = participants;
+        this.participants.forEach(p -> p.setMatch(null));
+        this.participants.clear();
+
+        if(participants != null){
+            participants.forEach(this::addParticipant);
+        }
     }
 }
