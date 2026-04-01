@@ -41,7 +41,6 @@ public class Field{
     public String getLocation(){return this.location;}
 
     //Setters
-    public void setId(Long id){this.id = id;}
     public void setName(String name){this.name = name;}
     public void setLocation(String location){this.location = location;}
 }
