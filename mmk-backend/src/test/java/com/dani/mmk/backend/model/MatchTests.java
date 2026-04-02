@@ -1,4 +1,5 @@
 package com.dani.mmk.backend.model;
 
-public class TestPlayer {
+public class MatchTests {
 }
+
