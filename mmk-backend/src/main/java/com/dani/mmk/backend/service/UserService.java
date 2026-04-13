@@ -42,6 +42,10 @@ public class UserService {
     }
 
     public User updateUser(Long id, User updatedUser) {
+        if (updatedUser == null) {
+            throw new IllegalArgumentException("updatedUser must not be null");
+        }
+
         User existingUser = getUserById(id);
 
         if (updatedUser.getEmail() != null
