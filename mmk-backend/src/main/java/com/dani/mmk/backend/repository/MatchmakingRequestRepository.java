@@ -11,6 +11,6 @@ public interface MatchmakingRequestRepository extends JpaRepository<MatchmakingR
 
     Optional<MatchmakingRequest> findByPlayer(Player player);
 
-    Optional<MatchmakingRequest> findByMatch(Match match);
+    Optional<MatchmakingRequest> findByMatchedMatch(Match matchedMatch);
 
 }
