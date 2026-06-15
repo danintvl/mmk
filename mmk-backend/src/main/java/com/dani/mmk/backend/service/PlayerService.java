@@ -3,10 +3,14 @@ package com.dani.mmk.backend.service;
 import com.dani.mmk.backend.model.User;
 import com.dani.mmk.backend.model.UserRole;
 import com.dani.mmk.backend.model.Player;
+import com.dani.mmk.backend.model.MatchmakingRequest;
 import com.dani.mmk.backend.repository.PlayerRepository;
+import com.dani.mmk.backend.repository.MatchmakingRequestRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 @Transactional
@@ -14,10 +18,13 @@ public class PlayerService {
 
     private final PlayerRepository playerRepository;
     private final UserService userService;
+    private final MatchmakingRequestRepository matchmakingRequestRepository;
 
-    public PlayerService(PlayerRepository playerRepository, UserService userService) {
+    public PlayerService(PlayerRepository playerRepository, UserService userService,
+                        MatchmakingRequestRepository matchmakingRequestRepository) {
         this.playerRepository = playerRepository;
         this.userService = userService;
+        this.matchmakingRequestRepository = matchmakingRequestRepository;
     }
 
     @Transactional(readOnly = true)
@@ -49,5 +56,12 @@ public class PlayerService {
 
         Player player = new Player(user);
         return playerRepository.save(player);
+    }
+
+    @Transactional(readOnly = true)
+    public List<MatchmakingRequest> getPlayerMatchmakingRequests(Long playerId) {
+        // Validate player exists, then fetch matchmaking requests
+        Player player = getPlayerById(playerId);
+        return matchmakingRequestRepository.findByPlayer(player);
     }
 }
