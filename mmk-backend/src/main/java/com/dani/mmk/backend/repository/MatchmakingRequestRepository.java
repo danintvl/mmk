@@ -2,6 +2,7 @@ package com.dani.mmk.backend.repository;
 
 import com.dani.mmk.backend.model.MatchmakingRequest;
 import com.dani.mmk.backend.model.Match;
+import com.dani.mmk.backend.model.MatchmakingRequestStatus;
 import com.dani.mmk.backend.model.Player;
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -17,5 +18,7 @@ public interface MatchmakingRequestRepository extends JpaRepository<MatchmakingR
     List<MatchmakingRequest> findByPlayerId(Long playerId);
 
     Optional<MatchmakingRequest> findByMatchedMatch(Match matchedMatch);
+
+    List<MatchmakingRequest> findByStatus(MatchmakingRequestStatus status);
 
 }

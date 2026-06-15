@@ -8,4 +8,6 @@ import java.util.Optional;
 public interface PlayerRepository extends JpaRepository<Player, Long> {
 
     Optional<Player> findByUserId(Long userId);
+
+    boolean existsByUserId(Long userId);
 }

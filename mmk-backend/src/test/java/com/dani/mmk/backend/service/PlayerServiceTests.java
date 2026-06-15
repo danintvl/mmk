@@ -84,7 +84,7 @@ class PlayerServiceTests {
         User user = createUser("p@example.com", "player", "hash", UserRole.PLAYER, true);
 
         when(userService.getUserById(3L)).thenReturn(user);
-        when(playerRepository.findByUserId(3L)).thenReturn(Optional.empty());
+        when(playerRepository.existsByUserId(3L)).thenReturn(false);
         when(playerRepository.save(any(Player.class))).thenAnswer(invocation -> invocation.getArgument(0));
 
         Player result = playerService.createPlayer(3L);
@@ -116,10 +116,9 @@ class PlayerServiceTests {
     @Test
     void createPlayer_throwsWhenPlayerAlreadyExists() {
         User user = createUser("dup@example.com", "dup", "hash", UserRole.PLAYER, true);
-        Player existingPlayer = new Player(user);
 
         when(userService.getUserById(6L)).thenReturn(user);
-        when(playerRepository.findByUserId(6L)).thenReturn(Optional.of(existingPlayer));
+        when(playerRepository.existsByUserId(6L)).thenReturn(true);
 
         IllegalArgumentException ex = assertThrows(IllegalArgumentException.class, () -> playerService.createPlayer(6L));
 
@@ -173,5 +172,4 @@ class PlayerServiceTests {
         return user;
     }
 }
-
 

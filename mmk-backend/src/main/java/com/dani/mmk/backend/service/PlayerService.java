@@ -50,7 +50,7 @@ public class PlayerService {
             throw new IllegalArgumentException("Cannot create player for non-PLAYER user id " + userId);
         }
 
-        if (playerRepository.findByUserId(userId).isPresent()) {
+        if (playerRepository.existsByUserId(userId)) {
             throw new IllegalArgumentException("Player for user id " + userId + " already exists");
         }
 
