@@ -1,5 +1,7 @@
 package com.dani.mmk.backend.service;
 
+import com.dani.mmk.backend.model.AvailabilitySlot;
+import com.dani.mmk.backend.model.Field;
 import com.dani.mmk.backend.model.MatchmakingRequest;
 import com.dani.mmk.backend.model.Player;
 import com.dani.mmk.backend.repository.FieldRepository;
@@ -48,9 +50,21 @@ public class MatchmakingRequestService {
 
     //Creators
 
-    public MatchmakingRequest createMatchmakingRequest(Long playerId){
-        Player player = playerRepository.getReferenceById(playerId);
+    public MatchmakingRequest createMatchmakingRequest(Long playerId, List<AvailabilitySlot> availabilitySlots, List<Field> acceptableFields){
+        //Validation
+        if(availabilitySlots == null || availabilitySlots.isEmpty()){
+            throw new IllegalArgumentException("availabilitySlots can't be null nor empty");
+        }
+        if(acceptableFields == null || acceptableFields.isEmpty()){
+            throw new IllegalArgumentException("acceptableFields can't be null nor empty");
+        }
 
+        Player player = playerRepository.findById(playerId).orElseThrow(() -> new EntityNotFoundException("Player with id : "+ playerId + " not found."));
+
+        //Make a request to save with matchmakingRequestRepo
+        MatchmakingRequest request = new MatchmakingRequest(player, availabilitySlots, acceptableFields);
+
+        return matchmakingRequestRepository.save(request);
     }
 
 }
