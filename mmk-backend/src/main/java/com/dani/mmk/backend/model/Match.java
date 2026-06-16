@@ -25,7 +25,7 @@ public class Match {
     private MatchStatus status;
 
     @OneToMany(mappedBy = "match", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<MatchParticipant> participants = new ArrayList<>();
+    private final List<MatchParticipant> participants = new ArrayList<>();
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "field_id")
