@@ -67,4 +67,8 @@ public class MatchmakingRequestService {
         return matchmakingRequestRepository.save(request);
     }
 
+    public void deleteMatchmakingRequestById(Long requestId){
+        matchmakingRequestRepository.deleteById(requestId);
+    }
+
 }
