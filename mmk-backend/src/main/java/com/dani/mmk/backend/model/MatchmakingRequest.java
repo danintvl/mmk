@@ -48,6 +48,14 @@ public class MatchmakingRequest {
 
     protected MatchmakingRequest(){}
 
+    public MatchmakingRequest(Player player, List<AvailabilitySlot> availabilitySlots, List<Field> acceptableFields){
+        this.setPlayer(player);
+        this.setAvailabilitySlots(availabilitySlots);
+        this.setAcceptableFields(acceptableFields);
+        this.setCreatedAt(LocalDateTime.now());
+        this.setStatus(MatchmakingRequestStatus.QUEUED);
+    }
+
     //--------------------------GETTERS----------------------------//
     public List<AvailabilitySlot> getAvailabilitySlots() {
         return availabilitySlots;
