@@ -35,10 +35,16 @@ public class MatchmakingRequestService {
         return matchmakingRequestRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("MatchmakingRequest with id " + id + " not found"));
     }
 
+    // Cette fonction semble inutile si l'on passe à chaque fois par le joueur, autant directement passer par le service de celui-ci
+
+    /*
+
     @Transactional(readOnly = true)
     public List<MatchmakingRequest> getMatchmakingRequestsByPlayerId(Long playerId) {
         return matchmakingRequestRepository.findByPlayerId(playerId);
     }
+
+    */
 
     //Creators
 
