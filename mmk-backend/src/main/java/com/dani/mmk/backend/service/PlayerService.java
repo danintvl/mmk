@@ -61,7 +61,9 @@ public class PlayerService {
 
     @Transactional(readOnly = true)
     public List<MatchmakingRequest> getPlayerMatchmakingRequests(Long playerId) {
-        // Validate player exists, then fetch matchmaking requests
+
+        // L'exception remonte dans le cas où le joueur n'existe pas et la fonction ne retourne pas de List
+
         Player player = getPlayerById(playerId);
         return matchmakingRequestRepository.findByPlayer(player);
     }
