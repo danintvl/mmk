@@ -6,6 +6,7 @@ import com.dani.mmk.backend.model.Player;
 import com.dani.mmk.backend.model.MatchmakingRequest;
 import com.dani.mmk.backend.repository.PlayerRepository;
 import com.dani.mmk.backend.repository.MatchmakingRequestRepository;
+import com.dani.mmk.backend.repository.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,13 +18,13 @@ import java.util.List;
 public class PlayerService {
 
     private final PlayerRepository playerRepository;
-    private final UserService userService;
+    private final UserRepository userRepository;
     private final MatchmakingRequestRepository matchmakingRequestRepository;
 
-    public PlayerService(PlayerRepository playerRepository, UserService userService,
+    public PlayerService(PlayerRepository playerRepository, UserRepository userRepository,
                         MatchmakingRequestRepository matchmakingRequestRepository) {
         this.playerRepository = playerRepository;
-        this.userService = userService;
+        this.userRepository = userRepository;
         this.matchmakingRequestRepository = matchmakingRequestRepository;
     }
 
@@ -40,7 +41,7 @@ public class PlayerService {
     }
 
     public Player createPlayer(Long userId) {
-        User user = userService.getUserById(userId);
+        User user = userRepository.getReferenceById(userId);
 
         if (!user.isActive()) {
             throw new IllegalStateException("Cannot create player for inactive user id " + userId);

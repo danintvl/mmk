@@ -30,16 +30,21 @@ public class MatchmakingRequestService {
 
     //Getters
 
+    @Transactional(readOnly = true)
     public MatchmakingRequest getMatchmakingRequestById(Long id) {
         return matchmakingRequestRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("MatchmakingRequest with id " + id + " not found"));
     }
 
+    @Transactional(readOnly = true)
     public List<MatchmakingRequest> getMatchmakingRequestsByPlayerId(Long playerId) {
         return matchmakingRequestRepository.findByPlayerId(playerId);
     }
 
-    public List<MatchmakingRequest> getMatchmakingRequestsByPlayer (Player player) {
-        return matchmakingRequestRepository.findByPlayer(player);
+    //Creators
+
+    public MatchmakingRequest createMatchmakingRequest(Long playerId){
+        Player player = playerRepository.getReferenceById(playerId);
+
     }
 
 }

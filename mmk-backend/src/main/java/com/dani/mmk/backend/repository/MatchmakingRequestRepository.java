@@ -11,10 +11,8 @@ import java.util.Optional;
 
 public interface MatchmakingRequestRepository extends JpaRepository<MatchmakingRequest, Long> {
 
-    // A player can have multiple matchmaking requests
     List<MatchmakingRequest> findByPlayer(Player player);
 
-    // Convenience method: find requests by player id without loading the Player entity
     List<MatchmakingRequest> findByPlayerId(Long playerId);
 
     Optional<MatchmakingRequest> findByMatchedMatch(Match matchedMatch);
